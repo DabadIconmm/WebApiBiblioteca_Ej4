@@ -168,5 +168,38 @@ namespace Ejercicio_Sesión_1.Controllers
             return Ok();
         }
 
+        // 4.9.c
+        [HttpDelete("Logico/{id:int}")]
+        public async Task<ActionResult> DeleteLogico(int id)
+        {
+            var editorial = await context.Editoriales.AsTracking().FirstOrDefaultAsync(x => x.Id == id);
+
+            if (editorial is null)
+            {
+                return NotFound();
+            }
+
+            editorial.Eliminado = true;
+            await context.SaveChangesAsync();
+            return Ok();
+        }
+
+        // 4.9.e
+        [HttpPut("Restaurar/{id:int}")]
+        public async Task<ActionResult> Restaurar(int id)
+        {
+            var editorial = await context.Editoriales.AsTracking()
+                .IgnoreQueryFilters()
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (editorial is null)
+            {
+                return NotFound();
+            }
+
+            editorial.Eliminado = false;
+            await context.SaveChangesAsync();
+            return Ok();
+        }
     }
 }

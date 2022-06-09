@@ -21,6 +21,7 @@ namespace Ejercicio_Sesión_1
             modelBuilder.Entity<Libro>().Property(x => x.Titulo).HasMaxLength(150);
             modelBuilder.Entity<Libro>().Property(x => x.Paginas).HasMaxLength(10000);
 
+            modelBuilder.Entity<Editorial>().HasQueryFilter(x => !x.Eliminado); // 4.9.d
             modelBuilder.Entity<Editorial>().HasKey(x => x.Id);
             modelBuilder.Entity<Editorial>().Property(x => x.Nombre).HasMaxLength(50);
 
