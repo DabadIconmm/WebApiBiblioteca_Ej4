@@ -25,11 +25,15 @@ namespace Ejercicio_Sesión_1
             modelBuilder.Entity<Editorial>().HasKey(x => x.Id);
             modelBuilder.Entity<Editorial>().Property(x => x.Nombre).HasMaxLength(50);
 
+            modelBuilder.Entity<ConsultaKeyLess>().HasNoKey().
+               ToSqlQuery("SELECT Editoriales.EditorialId,Editoriales.Nombre as NombreEditorial, LibroId, Libros.Nombre as NombreLibro, paginas FROM Editoriales INNER JOIN Libros ON Editoriales.EditorialId=Libros.EditorialID").ToView(null); // 4.10
+
             SeedData.Seed(modelBuilder);
 
         }
 
         public DbSet<Libro> Libros { get; set; }
         public DbSet<Editorial> Editoriales { get; set; }
+        public DbSet<ConsultaKeyLess> ConsultaKeyLess { get; set; } // 4.10
     }
 }
